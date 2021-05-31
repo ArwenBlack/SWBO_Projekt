@@ -19,5 +19,6 @@ from SWBO_Projekt import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.CommentView.as_view(), name="home")
+    path('home/', views.CommentView.as_view(), name="home"),
+    path('create_user/', views.CreateUserRegisterView.as_view(), name = 'register')
 ]

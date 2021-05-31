@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-tm)2u4*p4=v%18zo=w=g%*!!)+=p!%6apjvs^y3b^o)nzxpbfm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arwenblack1.pythonanywhere.com']
+ALLOWED_HOSTS = ['arwenblack1.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'knox',
 
 ]
 
@@ -132,3 +133,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
+    ]
+}

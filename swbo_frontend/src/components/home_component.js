@@ -7,10 +7,10 @@ import axios from "axios";
 import App from "../App";
 
 class Home extends Component {
-    render() {
+    render(){
         return (
-             <form>
-                <h3>Loged_in</h3>
+            <form>
+                <h3>Loged in</h3>
             </form>
         )
     }

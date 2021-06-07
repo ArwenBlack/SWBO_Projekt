@@ -3,6 +3,7 @@ import {Component} from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/login_component";
 import Default from "./components/default_component"
+import Register_component from "./components/register_component";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
                   </ul>
                   <li className="nav navbar-nav navbar-right">
                       <Link className="nav-link" to={"/login"}>Login</Link>
+                      <Link className="nav-link" to={"/register"}>Register</Link>
                   </li>
               </div>
           </nav>
@@ -26,6 +28,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Default} />
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register_component}/>
           </Switch>
         </div>
       </div>

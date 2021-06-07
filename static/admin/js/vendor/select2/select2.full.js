@@ -7,7 +7,7 @@
  */
 ;(function (factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
+    // AMD. Register_component as an anonymous module.
     define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // Node/CommonJS
@@ -5417,10 +5417,10 @@ S2.define('select2/core',[
     // Bind the container to all of the adapters
     this._bindAdapters();
 
-    // Register any DOM event handlers
+    // Register_component any DOM event handlers
     this._registerDomEvents();
 
-    // Register any internal event handlers
+    // Register_component any internal event handlers
     this._registerDataEvents();
     this._registerSelectionEvents();
     this._registerDropdownEvents();
@@ -6528,7 +6528,7 @@ S2.define('select2/selection/stopPropagation',[
 
 (function (factory) {
     if ( typeof S2.define === 'function' && S2.define.amd ) {
-        // AMD. Register as an anonymous module.
+        // AMD. Register_component as an anonymous module.
         S2.define('jquery-mousewheel',['jquery'], factory);
     } else if (typeof exports === 'object') {
         // Node/CommonJS style for Browserify

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-tm)2u4*p4=v%18zo=w=g%*!!)+=p!%6apjvs^y3b^o)nzxpbfm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arwenblack1.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['arwenblack1.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'knox',
-
 ]
 
 MIDDLEWARE = [

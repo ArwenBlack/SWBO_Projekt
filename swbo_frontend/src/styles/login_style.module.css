@@ -14,20 +14,20 @@
 	background-image: url("../images/thumb-1920-745754.png");
 	background-size: 100%;
 	border-radius: 15px;
-	height: 80%;
-	width: 300px;
+	height: 90%;
+	width: 350px;
 	min-height: 350px;
-	max-height: 500px;
+	max-height: 600px;
 	position: relative;
 	overflow: hidden;
-	box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19); ;
+	box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.90),
+    0 30px 80px 0 rgba(0, 0, 0, 0.19); ;
 
 }
 .form-structor {
 	border-radius: 15px;
 	height: 100%;
-	width: 300px;
+	width: auto;
 	position: relative;
 	overflow: hidden;
 }

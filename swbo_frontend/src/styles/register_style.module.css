@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+
+@media only screen and (min-width : 992px) {
+	.body {
+		position: relative;
+		height: calc(100vh - 56px);
+		background-color: #e3eeff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+	}
+
+	.back_image {
+		content: "";
+		background-image: url("../images/thumb-1920-745754.png");
+		background-size: 100%;
+		border-radius: 15px;
+		height: 90%;
+		width: 350px;
+		min-height: 350px;
+		max-height: 600px;
+		position: relative;
+		overflow: hidden;
+		box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.90),
+		0 30px 80px 0 rgba(0, 0, 0, 0.19);;
+
+	}
+
+	.form-structor {
+		border-radius: 15px;
+		height: 100%;
+		width: auto;
+		position: relative;
+		overflow: hidden;
+	}
+
+
+	.form-title {
+		margin-top: 50px;
+		color: #c7ddef;
+		font-size: 1.7em;
+		text-align: center;
+	}
+
+	.form-holder {
+		width: 75%;
+		margin: 0 auto;
+		overflow: hidden;
+		margin-top: 30px;
+		opacity: 1;
+		visibility: visible;
+
+	}
+
+	.form-holder .label {
+		color: #c7ddef;
+		text-align: left;
+		font-size: 0.8em;
+		padding: 8px 5px;
+	}
+
+	.form-holder .label1 {
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.6);
+		color: #b92c28;
+		font-size: 0.7em;
+		padding: 0px 5px;
+		font-weight: bold;
+	}
+
+	.form-holder .input {
+		background-color: rgba(255, 255, 255, 0.9);
+		border-radius: 15px;
+		outline: none;
+		box-shadow: black;
+		display: block;
+		height: 32px;
+		line-height: 30px;
+		padding: 10px 20px;
+		border-bottom: 1px solid #eee;
+		width: 100%;
+		font-size: 12px;
+	}
+
+	.submit-btn {
+		background-color: rgba(255, 255, 255, 0.2);
+		color: rgba(255, 255, 255, 0.95);
+		border: 0;
+		border-radius: 15px;
+		display: block;
+		margin: 15px auto;
+		padding: 15px 45px;
+		width: 75%;
+		font-size: 13px;
+		font-weight: bold;
+		cursor: pointer;
+		opacity: 1;
+		visibility: visible;
+		-webkit-transition: all 0.3s ease;
+	}
+
+	.submit-btn:hover {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
+
+
+
+

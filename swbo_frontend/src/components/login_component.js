@@ -3,15 +3,18 @@ import {Redirect} from 'react-router'
 import  styles from "../styles/login_style.module.css"
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import Home from "../components/home_component"
-import CustomModal  from "../components/Modal_login"
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import App from "../App";
 class Login extends Component{
 	state = {
 	    isOpen: false,
 	    isSignedUp: 0,
         username: "",
         password: "",
+        user: {
+	        username: "",
+            password: ""
+        }
   }
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -33,6 +36,7 @@ class Login extends Component{
     axios.post(`/login/`,  user )
       .then(res => {
         if (res.status === 200) {
+            localStorage.setItem('user', JSON.stringify(res.data))
             this.setState({isSignedUp: 1});
         }
       })
@@ -49,7 +53,7 @@ class Login extends Component{
     }
     render(){
 	    if (this.state.isSignedUp === 1) {
-         return <Redirect to = {{ pathname: "/home", component: Home }} />;
+         return <Redirect to = "/home" />;
          }
     	return(
     		<div className={styles["body"]}>

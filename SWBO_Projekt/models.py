@@ -1,12 +1,19 @@
+from datetime import datetime
+
 from django.contrib.auth.models import UserManager
 from django.db import models
+from django.contrib.auth.models import User
 
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=55)
+    content = models.TextField(max_length=500)
+    date = models.DateTimeField(default=datetime.now)
 
 class Comment(models.Model):
-    author_name = models.CharField(max_length=20)
-    date = models.DateTimeField()
-    content = models.TextField(max_length=250)
+    mother_post = models.ForeignKey(Post, default = None, null = True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=500)
+    date = models.DateTimeField(default=datetime.now)
 
-    def __str__(self):
-        return self.author_name
 

@@ -1,6 +1,6 @@
 import React, { Component} from "react";
 import "../styles/home_style.module.css"
-class Home extends Component{
+class Default extends Component{
     render(){
         return (
             <form>
@@ -9,4 +9,4 @@ class Home extends Component{
         )
     }
 }
-export default Home;
+export default Default;

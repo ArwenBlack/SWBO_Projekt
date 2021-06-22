@@ -32,7 +32,26 @@ class UserView(ListAPIView):
     serializer_class = UserSerializer
 
 
-class CommentView (ListAPIView):
+class UserGetView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class PostView(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostCreate(CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class CommentView(ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class CommentCreate(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 

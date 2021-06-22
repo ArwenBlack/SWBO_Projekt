@@ -48,8 +48,15 @@ class UserLoginSerializer(serializers.Serializer):
         raise serializers.ValidationError("Invalid Details.")
 
 
+class PostSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
+    class Meta:
+        model = Post
+        fields = ['id', 'author', 'title', 'content', 'date']
+
 
 class CommentSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
     class Meta:
         model = Comment
-        fields = ('id', 'author_name', 'date', 'content')
+        fields = ['id', 'mother_post', 'author', 'content', 'date']

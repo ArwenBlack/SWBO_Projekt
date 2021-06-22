@@ -1,34 +1,28 @@
 import styles from './App.module.css';
-import {Component} from "react";
+import React, {Component} from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/login_component";
 import Default from "./components/default_component"
 import Register_component from "./components/register_component";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+import Home from "./components/home_component";
+import Navbar_component from "./components/Navbar_component"
+import Comments from "./components/comments_component";
 class App extends Component {
-  render() {
+
+    render() {
     return (<Router>
+
         <div className={styles["App"]}>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <div className="collapse navbar-collapse" id="navbarText">
-                  <ul className="navbar-nav mr-auto">
-                        <li className="nav navbar-nav navbar-left">
-                            <Link className="nav-link" to={"/"}>Home</Link>
-                        </li>
-                  </ul>
-                  <li className="nav navbar-nav navbar-right">
-                      <Link className="nav-link" to={"/login"}>Login</Link>
-                      <Link className="nav-link" to={"/register"}>Register</Link>
-                  </li>
-              </div>
-          </nav>
+            <Navbar_component />
          <div className="auth-wrapper">
         <div className="auth-inner">
           <Switch>
             <Route exact path='/' component={Default} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register_component}/>
+            <Route path="/home" component={Home}/>
+            <Route path="/comments" component={Comments}/>
           </Switch>
         </div>
       </div>

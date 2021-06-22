@@ -1,14 +1,18 @@
 import React, { Component} from "react";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Home from "./home_component";
+import {Redirect} from 'react-router'
+import { Link } from 'react-router-dom';
 import styles from "../styles/register_style.module.css";
 import axios from "axios";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap"
+import Login from "./login_component";
 
 class Register_component extends Component {
     state = {
         bad_pass: false,
 	    isOpen: false,
+        goodRegister:false,
+        redirectME: false,
 	    isSignedUp: 0,
         username: "",
         password: "",
@@ -82,16 +86,16 @@ class Register_component extends Component {
     axios.post(`/create_user/`,  user)
       .then(res => {
         if (res.status === 201) {
-            this.setState({isSignedUp: 1});
+            this.setState({isSignedUp: 1, goodRegister:true});
         }
       })
       .catch(error => {
             this.setState({isOpen:true});
             if (error.response.request.response.includes("A user with that username already exists."))
                 document.getElementById("bad_register_cred").innerHTML += "A user with that username already exists."
-            if (error.response.request.response.includes("This field must be unique."))
+            else if (error.response.request.response.includes("This field must be unique."))
                 document.getElementById("bad_register_cred").innerHTML += "<br /> This e-mail address is already in use."
-            if (error.response.request.response.includes("This field may not be blank."))
+            else if (error.response.request.response.includes("This field may not be blank."))
                 document.getElementById("bad_register_cred").innerHTML += "<br /> Please complete all fields."
             else
                 document.getElementById("bad_register_cred").innerHTML  = "An error occurred. Please try again"
@@ -104,7 +108,9 @@ class Register_component extends Component {
 	handleCloseModal = () => {
         this.setState({ isOpen: false });
     }
-
+    handleRedirectToLogin () {
+        return <Redirect to = {{ pathname: "/login", component: Login }} />
+    }
    render() {
        return (
            <div className={styles["body"]}>
@@ -145,6 +151,19 @@ class Register_component extends Component {
                         color="danger"
                         onClick={this.handleCloseModal}
                     >Close</Button>
+                    </ModalFooter>
+                 </Modal>
+               <Modal isOpen={this.state.goodRegister} onCloseModal={this.handleRedirectToLogin}>
+                    <ModalHeader >Registered successful</ModalHeader>
+                    <ModalBody>
+                    <span>
+                        <text className="text" id = "good_register_cred">Account created successful. Please log in</text>
+                    </span>
+                    </ModalBody>
+                     <ModalFooter>
+                    <Link to =  {{ pathname: "/login", component: Login }} className="btn-primary">
+                        Log in
+                    </Link>
                     </ModalFooter>
                  </Modal>
            </div>

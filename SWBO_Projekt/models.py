@@ -11,7 +11,7 @@ class Post(models.Model):
     date = models.DateTimeField(default=datetime.now)
 
 class Comment(models.Model):
-    mother_post = models.ForeignKey(Post, default = None, null = True, on_delete=models.SET_NULL)
+    mother_post = models.ForeignKey(Post, default = None, null = True, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=500)
     date = models.DateTimeField(default=datetime.now)

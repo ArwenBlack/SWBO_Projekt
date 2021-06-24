@@ -7,8 +7,8 @@ import moment from "moment";
 import { Text, StyleSheet } from "react-native";
 import {Redirect} from "react-router";
 import {Link} from "react-router-dom";
-
-class Home extends Component {
+import Navbar_component from "./Navbar_component";
+class Forum extends Component {
     constructor(props) {
     super(props);
     this.state ={
@@ -56,6 +56,15 @@ class Home extends Component {
         localStorage.setItem('post', JSON.stringify(item))
         console.log(JSON.parse(localStorage.getItem('post')))
     }
+
+    handleDelete = (item) => {
+
+        axios
+            .delete(`/post/delete/${item.id}/`)
+            .then(res => this.refreshList())
+            .catch(err => console.log(err))
+    }
+
     renderItems = () => {
         const { viewCompleted } = this.state;
          const newItems = this.state.Post.filter(
@@ -64,9 +73,9 @@ class Home extends Component {
     return newItems.map((item) => (
       <li key={item.id} style={{listStyle: "none"}}>
           <div className="col-md-12" style={{textAlign: "left"}}>
-              <div className="card mb-4">
-                  <div className="card-header">
-                      <div className="media flex-wrap w-100 align-items-center">
+              <div className="card mb-4" >
+                  <div className="card-header" style={{ boxShadow: "5px 5px 5px rgb(91,91,112) "}}>
+                      <div className="media flex-wrap w-100 align-items-center" >
                           <div className="media-body ml-3" ><Link onClick={() => this.showComments(item)} data-abc="true">{item.title}</Link>
                               <div className="text-muted small" id={item.id}>{this.handleAuthor(item)}</div>
                           </div>
@@ -92,8 +101,12 @@ class Home extends Component {
                           <div className="px-4 pt-3">
                           </div>
                           <div className="px-4 pt-3">
-                              <button type="button" className="btn btn-primary"> Reply
+                              <button type="button" className="btn btn-primary" onClick={() => this.showComments(item)} > Reply
                               </button>
+                              {this.state.user.id === item.author &&
+                                  <button type="button" className="btn btn-danger" style={{margin: "10px"}} onClick={() => { if (window.confirm('Are you sure to delete this post?')) this. handleDelete(item) } } > Delete
+                                    </button>
+                              }
                           </div>
                       </div>
                   </div>
@@ -109,17 +122,18 @@ class Home extends Component {
          }
         return (
             <div className={styles["App"]}>
+                 <Navbar_component />
             <div>
-            <h1>FORUM</h1>
+            <h3>FORUM</h3>
             </div>
             <div className="col-6 mx-auto p-0">
-            <div className="card p-3">
+            <div className="card p-3" style={{boxShadow: " 0 0 1em rgb(150,200,214)"}}>
               <div className="mb-4">
                 <button className="btn btn-primary" onClick={this.createPost} style={{float:"right"}} >
                         New Post
                 </button>
               </div>
-              <ul className="list-group list-group-flush border-top-0">
+              <ul className="list-group list-group-flush border-top-0" >
                 {this.renderItems()}
               </ul>
             </div>
@@ -137,4 +151,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Forum;

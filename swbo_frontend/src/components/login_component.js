@@ -5,6 +5,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import App from "../App";
+import Navbar_component from "./Navbar_component";
 class Login extends Component{
 	state = {
 	    isOpen: false,
@@ -53,9 +54,10 @@ class Login extends Component{
     }
     render(){
 	    if (this.state.isSignedUp === 1) {
-         return <Redirect to = "/home" />;
+         return <Redirect to = "/forum" />;
          }
     	return(
+    	    <div> <Navbar_component />
     		<div className={styles["body"]}>
 				<div className={styles["back_image"]}>
     			<div className={styles["form-structor"]} >
@@ -86,6 +88,7 @@ class Login extends Component{
                     </ModalFooter>
                  </Modal>
     		</div>
+            </div>
 		)
     }
 }

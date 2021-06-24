@@ -5,6 +5,7 @@ import axios from "axios";
 import CreatePostModal from "./createPostModal";
 import CreateCommentModal from "./createCommentModal";
 import moment from "moment";
+import Navbar_component from "./Navbar_component";
 class Comments extends Component{
     constructor(props) {
     super(props);
@@ -13,8 +14,30 @@ class Comments extends Component{
             mother_post: JSON.parse(localStorage.getItem('post')),
             comment_create: false,
             activeItem: {},
-            just_test: 0
+            just_test: 0,
+            Comment_for_post: []
         }
+    }
+    componentDidMount() {
+        this.getComments();
+    }
+    getComments = () => {
+        axios
+            .get('/comment/')
+            .then((res) => this.getGoodComments(res.data))
+            .catch(err => console.log(err))
+        console.log(this.state.Comment)
+    }
+
+    getGoodComments = (r) => {
+        let pom = [];
+        for (let i =0 ; i < r.length; i++){
+        if (r[i].mother_post === this.state.mother_post.id){
+                pom.push(r[i])
+            }
+        }
+        console.log(pom)
+        this.setState({Comment_for_post: pom})
     }
     toggleC = () => {
         this.setState({comment_create: !this.state.comment_create})
@@ -37,14 +60,72 @@ class Comments extends Component{
         this.toggleC()
         axios
             .post("/comment/create/", item)
-            .then((res) => this.setState({just_test: 1}))
+            .then((res) => this.getComments())
             .catch((err) => console.log(err))
     }
+
+    renderItems = () => {
+        const { viewCompleted } = this.state;
+         const newItems = this.state.Comment_for_post.filter(
+        (item) => item.completed === viewCompleted
+    );
+
+    return newItems.map((item) => (
+      <li key={item.id} style={{listStyle: "none"}}>
+          <div className="col-md-12" style={{textAlign: "left"}}>
+              <div className="card mb-4" >
+                  <div className="card-header" style={{ boxShadow: "5px 5px 5px rgb(91,91,112) "}}>
+                      <div className="media flex-wrap w-100 align-items-center" >
+                          <div className="media-body ml-3" ><Link  data-abc="true">1233</Link>
+                              <div className="text-muted small" id={item.id}>{this.handleAuthor(item)}</div>
+                          </div>
+                          <div className="text-muted small ml-3">
+                              <div>Adding date <strong>{item.date}</strong></div>
+                          </div>
+                      </div>
+                      <div className="card-body">
+                          <p> {
+                              item.content.split("\n").map(function (i) {
+                                  return (
+                                      <span>
+                          {i}
+                          <br/>
+                          </span>
+                              )
+                          })
+                          }</p>
+                      </div>
+                      <div>{this.state.user.id === item.author &&
+                      <div
+                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                          <div className="px-4 pt-3">
+                          </div>
+                          <div className="px-4 pt-3">
+
+                              <button type="button" className="btn btn-danger" style={{margin: "10px"}} onClick={() => {
+                                  if (window.confirm('Are you sure to delete this post?')) this.handleDelete(item)
+                              }}> Delete
+                              </button>
+
+                          </div>
+                      </div>
+                      }
+                          </div>
+
+                  </div>
+              </div>
+          </div>
+      </li>
+    ));
+  };
+
+
     render(){
         return (
             <div className="test">
-            <h3>comments</h3>
-                 <div className="col-7 mx-auto p-0">
+                <Navbar_component />
+            <h3>Comments</h3>
+                <div className="col-7 mx-auto p-0">
              <div className="col-md-12" style={{textAlign: "left"}}>
               <div className="card mb-9">
                   <div className="card-header">
@@ -70,13 +151,23 @@ class Comments extends Component{
 
                       </div>
                       <div
-                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 ">
                           <div className="px-4 pt-3">
                           </div>
-                          <div className="px-4 pt-3">
+                          <div className="px-4 pt-3 pb-1">
                               <button type="button" className="btn btn-primary" onClick={this.handleCommentCreate}> Reply
                               </button>
                           </div>
+
+                      </div>
+                      <div
+                          className="card-footer border-top-0 flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                          <div className="">
+                          </div>
+                          <div className="pt-3">
+                              {this.renderItems()}
+                          </div>
+
                       </div>
                   </div>
               </div>

@@ -45,6 +45,9 @@ class PostCreate(CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+class PostDelete(DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
 class CommentView(ListAPIView):
     queryset = Comment.objects.all()

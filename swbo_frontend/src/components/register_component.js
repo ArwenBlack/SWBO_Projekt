@@ -6,6 +6,7 @@ import styles from "../styles/register_style.module.css";
 import axios from "axios";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap"
 import Login from "./login_component";
+import Navbar_component from "./Navbar_component";
 
 class Register_component extends Component {
     state = {
@@ -113,6 +114,7 @@ class Register_component extends Component {
     }
    render() {
        return (
+           <div> <Navbar_component />
            <div className={styles["body"]}>
                <div className={styles["back_image"]}>
                    <div className={styles["form-structor"]}>
@@ -166,6 +168,7 @@ class Register_component extends Component {
                     </Link>
                     </ModalFooter>
                  </Modal>
+           </div>
            </div>
        )
    }

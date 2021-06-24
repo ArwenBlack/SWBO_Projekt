@@ -15,9 +15,15 @@ class Navbar_component extends Component {
     }
 
     componentDidMount = () =>{
+        this.handleNavBar()
+    }
+    handleNavBar = () => {
         if (JSON.parse(localStorage.getItem('user')) !== null) {
             this.setState({loggedIn: true})
         }
+    }
+    handleNavBarHelper = () => {
+        this.setState({loggedIn: true})
     }
     handleLogOut = () => {
         localStorage.removeItem('user')
@@ -51,7 +57,8 @@ class Navbar_component extends Component {
                   </ul>
                   <li className="nav navbar-nav navbar-right">
 
-                      <Link className="nav-link" to={"/home"}>Hi {JSON.parse(localStorage.getItem('user')).user.username}</Link>
+                      <Link className="nav-link" >Hi {JSON.parse(localStorage.getItem('user')).user.username}</Link>
+                      <Link className="nav-link" to={"/forum"}>Forum</Link>
                       <Link className="nav-link" onClick = {this.handleLogOut} to={"/"}>Logout</Link>
                   </li>
               </div>
@@ -60,6 +67,7 @@ class Navbar_component extends Component {
 
         )
     }
+
 }
 
 export default Navbar_component

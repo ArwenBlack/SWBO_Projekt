@@ -6,6 +6,7 @@ import CreatePostModal from "./createPostModal";
 import CreateCommentModal from "./createCommentModal";
 import moment from "moment";
 import Navbar_component from "./Navbar_component";
+import {Redirect} from "react-router";
 class Comments extends Component{
     constructor(props) {
     super(props);
@@ -15,7 +16,8 @@ class Comments extends Component{
             comment_create: false,
             activeItem: {},
             just_test: 0,
-            Comment_for_post: []
+            Comment_for_post: [],
+            redirect: false,
         }
     }
     componentDidMount() {
@@ -52,16 +54,34 @@ class Comments extends Component{
         const comment = {content: ""}
         this.setState({activeItem: comment, comment_create: !this.state.comment_create})
     }
+    handleEdit = (item) =>{
+        this.setState({activeItem: item, comment_create: !this.state.comment_create})
+    }
 
     handleCommentSubmit = (item)=>{
+        this.toggleC()
+
+        if (item.id){
+            axios
+                .put(`/comment/edit/${item.id}/`, item)
+                .then((res) => this.getComments())
+                .catch(err => console.log(err))
+            return;
+        }
         item["author"] = this.state.user.id
         item["date"] = moment().format("YYYY-MM-DD HH:mm:ss")
         item["mother_post"] = this.state.mother_post.id
-        this.toggleC()
         axios
             .post("/comment/create/", item)
             .then((res) => this.getComments())
             .catch((err) => console.log(err))
+    }
+
+    handleDelete = (item) => {
+        axios
+            .delete(`/comment/delete/${item.id}/`)
+            .then(res => this.getComments())
+            .catch(err => console.log(err))
     }
 
     renderItems = () => {
@@ -73,16 +93,17 @@ class Comments extends Component{
     return newItems.map((item) => (
       <li key={item.id} style={{listStyle: "none"}}>
           <div className="col-md-12" style={{textAlign: "left"}}>
-              <div className="card mb-4" >
-                  <div className="card-header" style={{ boxShadow: "5px 5px 5px rgb(91,91,112) "}}>
+              <div className="card mb-4" style={{ boxShadow: "5px 5px 5px rgb(91,91,112) "}} >
+                  <div className="card-header" >
                       <div className="media flex-wrap w-100 align-items-center" >
-                          <div className="media-body ml-3" ><Link  data-abc="true">1233</Link>
+                          <div className="media-body ml-3" ><div data-abc="true">Comment for post "{this.state.mother_post.title}"</div>
                               <div className="text-muted small" id={item.id}>{this.handleAuthor(item)}</div>
                           </div>
                           <div className="text-muted small ml-3">
                               <div>Adding date <strong>{item.date}</strong></div>
                           </div>
                       </div>
+                        </div>
                       <div className="card-body">
                           <p> {
                               item.content.split("\n").map(function (i) {
@@ -106,13 +127,15 @@ class Comments extends Component{
                                   if (window.confirm('Are you sure to delete this post?')) this.handleDelete(item)
                               }}> Delete
                               </button>
+                              <button type="button" className="btn btn-primary" onClick={() => {this. handleEdit(item) } } > Edit
+                                    </button>
 
                           </div>
                       </div>
                       }
                           </div>
 
-                  </div>
+
               </div>
           </div>
       </li>
@@ -121,13 +144,18 @@ class Comments extends Component{
 
 
     render(){
+        if (this.state.redirect === true) {
+            return <Redirect to = "/forum" />;
+         }
         return (
             <div className="test">
                 <Navbar_component />
-            <h3>Comments</h3>
-                <div className="col-7 mx-auto p-0">
+                <div>
+            <h3>Comments  <button className='btn btn-outline-primary' onClick={() => this.setState({redirect: true})} style={{margin: "10px"}}>Back</button> </h3>
+                    </div>
+                <div className="col-7 mx-auto p-0" >
              <div className="col-md-12" style={{textAlign: "left"}}>
-              <div className="card mb-9">
+              <div className="card mb-9" style={{boxShadow: " 0 0 1em rgb(150,200,214)"}}>
                   <div className="card-header">
                       <div className="media flex-wrap w-100 align-items-center">
                           <div className="media-body ml-3" ><a  data-abc="true">{this.state.mother_post.title}</a>
@@ -137,6 +165,7 @@ class Comments extends Component{
                               <div>Adding date <strong>{this.state.mother_post.date}</strong></div>
                           </div>
                       </div>
+                  </div>
                       <div className="card-body">
                           <p> {
                               this.state.mother_post.content.split("\n").map(function (i) {
@@ -151,7 +180,7 @@ class Comments extends Component{
 
                       </div>
                       <div
-                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 ">
+                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0  " style={{backgroundColor:"rgb(255, 235, 232)"}}>
                           <div className="px-4 pt-3">
                           </div>
                           <div className="px-4 pt-3 pb-1">
@@ -161,7 +190,7 @@ class Comments extends Component{
 
                       </div>
                       <div
-                          className="card-footer border-top-0 flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                          className="card-footer border-top-0 flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3" style={{backgroundColor:"rgb(255, 235, 232)"}}>
                           <div className="">
                           </div>
                           <div className="pt-3">
@@ -169,7 +198,6 @@ class Comments extends Component{
                           </div>
 
                       </div>
-                  </div>
               </div>
           </div>
             </div>

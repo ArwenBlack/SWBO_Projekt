@@ -49,14 +49,14 @@ class UserLoginSerializer(serializers.Serializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    date = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = Post
         fields = ['id', 'author', 'title', 'content', 'date']
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    date = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = Comment
         fields = ['id', 'mother_post', 'author', 'content', 'date']

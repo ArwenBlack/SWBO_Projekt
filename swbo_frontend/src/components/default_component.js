@@ -8,7 +8,7 @@ class Default extends Component{
                 <Navbar_component />
 
             <form>
-                <h3>AppName</h3>
+                <h3>LOTR</h3>
             </form>
         </div>
         )

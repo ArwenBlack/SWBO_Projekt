@@ -49,6 +49,11 @@ class PostDelete(DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+class PostEdit(UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
 class CommentView(ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -58,3 +63,10 @@ class CommentCreate(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+class CommentDelete(DestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+class CommentEdit(UpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

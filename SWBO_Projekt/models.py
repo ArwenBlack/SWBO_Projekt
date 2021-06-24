@@ -17,3 +17,9 @@ class Comment(models.Model):
     date = models.DateTimeField(default=datetime.now)
 
 
+class Character(models.Model):
+    name = models.CharField(max_length=50)
+    book_1  = models.IntegerField(default=0)
+    book_2 = models.IntegerField(default=0)
+    book_3 = models.IntegerField(default=0)
+    book_hobbit = models.IntegerField(default=0)

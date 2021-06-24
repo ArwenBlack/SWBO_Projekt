@@ -32,10 +32,18 @@ class Forum extends Component {
       .catch((err) => console.log(err));
   };
     handlePostSubmit = (item)=>{
+        console.log(item)
+        this.toggle()
+        if (item.id){
+            axios
+                .put(`/post/edit/${item.id}/`, item)
+                .then((res) => this.refreshList());
+            return;
+        }
+
         item["author"] = this.state.user.id
         item["date"] = moment().format("YYYY-MM-DD HH:mm:ss")
         console.log(item)
-        this.toggle()
         axios
             .post("/post/create/", item)
             .then((res) => this.refreshList())
@@ -58,11 +66,14 @@ class Forum extends Component {
     }
 
     handleDelete = (item) => {
-
         axios
             .delete(`/post/delete/${item.id}/`)
             .then(res => this.refreshList())
             .catch(err => console.log(err))
+    }
+
+    handleEdit = (item) =>{
+        this.setState({activeItem: item, new_post: !this.state.new_post})
     }
 
     renderItems = () => {
@@ -73,8 +84,8 @@ class Forum extends Component {
     return newItems.map((item) => (
       <li key={item.id} style={{listStyle: "none"}}>
           <div className="col-md-12" style={{textAlign: "left"}}>
-              <div className="card mb-4" >
-                  <div className="card-header" style={{ boxShadow: "5px 5px 5px rgb(91,91,112) "}}>
+              <div className="card mb-4" style={{ boxShadow: "5px 5px 5px rgb(91,91,112) "}} >
+                  <div className="card-header" >
                       <div className="media flex-wrap w-100 align-items-center" >
                           <div className="media-body ml-3" ><Link onClick={() => this.showComments(item)} data-abc="true">{item.title}</Link>
                               <div className="text-muted small" id={item.id}>{this.handleAuthor(item)}</div>
@@ -83,6 +94,7 @@ class Forum extends Component {
                               <div>Adding date <strong>{item.date}</strong></div>
                           </div>
                       </div>
+                  </div>
                       <div className="card-body">
                           <p> {
                               item.content.split("\n").map(function (i) {
@@ -97,19 +109,24 @@ class Forum extends Component {
 
                       </div>
                       <div
-                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                          className="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3" style={{backgroundColor:"rgb(255, 235, 232)"}}>
                           <div className="px-4 pt-3">
                           </div>
                           <div className="px-4 pt-3">
-                              <button type="button" className="btn btn-primary" onClick={() => this.showComments(item)} > Reply
+                              <button type="button" className="btn btn-primary" style={{margin: "10px"}} onClick={() => this.showComments(item)} > Reply
                               </button>
+                              {this.state.user.id === item.author &&
+                                  <button type="button" className="btn btn-primary" onClick={() => {this. handleEdit(item) } } > Edit
+                                    </button>
+                              }
                               {this.state.user.id === item.author &&
                                   <button type="button" className="btn btn-danger" style={{margin: "10px"}} onClick={() => { if (window.confirm('Are you sure to delete this post?')) this. handleDelete(item) } } > Delete
                                     </button>
                               }
+
+
                           </div>
                       </div>
-                  </div>
               </div>
           </div>
       </li>

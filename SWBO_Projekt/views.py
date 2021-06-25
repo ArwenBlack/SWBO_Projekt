@@ -70,3 +70,12 @@ class CommentDelete(DestroyAPIView):
 class CommentEdit(UpdateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+class CharcterView(ListAPIView):
+    queryset = Character.objects.all()
+    serializer_class = CharactersSerializer
+
+
+class CharacterWordsView(ListAPIView):
+    queryset = WordbyCharcter.objects.all()
+    serializer_class = CharactersWordsSerializer

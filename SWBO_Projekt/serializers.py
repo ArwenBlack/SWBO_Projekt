@@ -6,8 +6,10 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework.validators import UniqueValidator
 
 from .models import *
+
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
 JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,6 +21,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
+
     class Meta:
         model = User
         fields = ('id', 'username', 'password', 'password2', 'email')
@@ -30,8 +33,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = User.objects.create(username = validated_data['username'],
-                                        email = validated_data['email'])
+        user = User.objects.create(username=validated_data['username'],
+                                   email=validated_data['email'])
         user.set_password(validated_data['password'])
         user.save()
         return user
@@ -50,6 +53,7 @@ class UserLoginSerializer(serializers.Serializer):
 
 class PostSerializer(serializers.ModelSerializer):
     date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
     class Meta:
         model = Post
         fields = ['id', 'author', 'title', 'content', 'date']
@@ -57,6 +61,19 @@ class PostSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
     class Meta:
         model = Comment
         fields = ['id', 'mother_post', 'author', 'content', 'date']
+
+
+class CharactersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Character
+        fields = ['id', 'name', 'race', 'url']
+
+
+class CharactersWordsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WordbyCharcter
+        fields = '__all__'

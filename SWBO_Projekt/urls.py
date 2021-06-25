@@ -32,5 +32,7 @@ urlpatterns = [
     path('comment/create/', views.CommentCreate.as_view(), name = "comment_create"),
     path('comment/delete/<int:pk>/', views.CommentDelete.as_view(), name = "comment_delete"),
     path('comment/edit/<int:pk>/', views.CommentEdit.as_view(), name = "comment_edit"),
+    path('characters/', views.CharcterView.as_view(), name = "character"),
+    path('characters_words/', views.CharacterWordsView.as_view(), name = "character_words"),
 
 ]

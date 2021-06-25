@@ -19,7 +19,13 @@ class Comment(models.Model):
 
 class Character(models.Model):
     name = models.CharField(max_length=50)
-    book_1  = models.IntegerField(default=0)
-    book_2 = models.IntegerField(default=0)
-    book_3 = models.IntegerField(default=0)
-    book_hobbit = models.IntegerField(default=0)
+    url = models.CharField(max_length=200, default="none")
+    race = models.CharField(max_length=50, default="none")
+
+
+class WordbyCharcter(models.Model):
+    book = models.CharField(max_length=50)
+    chapter = models.CharField(max_length=100, default='none')
+    character = models.CharField(max_length=50)
+    race = models.CharField(max_length=50)
+    words = models.IntegerField(default=0)

@@ -44,10 +44,50 @@ class Default extends Component{
     }
 
     getCharactersWords = (Data) => {
+        let list_of_most_important = ['Frodo', 'Sam', 'Gandalf', 'Aragorn', 'Legolas', 'Gimli', 'Merry', 'Pippin', 'Boromir', 'Gollum']
         let listOfWords1 = {}
         let listOfWords2 = {}
         let listOfWords3 = {}
-
+        let listOfWords1_end = {}
+        let listOfWords2_end = {}
+        let listOfWords3_end = {}
+        for (let i=0; i<Data.length; i++){
+            if(Data[i].book === "The Fellowship Of The Ring"){
+                if(Data[i].character in listOfWords1){
+                    listOfWords1[Data[i].character] += Data[i].words
+                    if (list_of_most_important.includes(Data[i].character)){
+                        listOfWords1_end[Data[i].character]  = listOfWords1[Data[i].character]
+                    }
+                }
+                else{
+                    listOfWords1[Data[i].character] = Data[i].words
+                }
+            }
+            if(Data[i].book === "The Two Towers"){
+                if(Data[i].character in listOfWords2){
+                    listOfWords2[Data[i].character] += Data[i].words
+                    if (list_of_most_important.includes(Data[i].character)){
+                        listOfWords2_end[Data[i].character]  = listOfWords2[Data[i].character]
+                    }
+                }
+                else{
+                    listOfWords2[Data[i].character] = Data[i].words
+                }
+            }
+            if(Data[i].book === "The Return Of The King"){
+                if(Data[i].character in listOfWords3){
+                    listOfWords3[Data[i].character] += Data[i].words
+                    if (list_of_most_important.includes(Data[i].character)){
+                        listOfWords3_end[Data[i].character]  = listOfWords3[Data[i].character]
+                    }
+                }
+                else{
+                    listOfWords3[Data[i].character] = Data[i].words
+                }
+            }
+        }
+        console.log(listOfWords1_end)
+        this.setState({Characters_words_book1: listOfWords1_end, Characters_words_book2: listOfWords2_end, Characters_words_book3:listOfWords3_end})
     }
     render(){
         return (
@@ -69,6 +109,31 @@ class Default extends Component{
                         },
                     ]}
                     layout={ {title: 'Character race'} }
+                    useResizeHandler={true}
+                    style = {{ width: '100%', height: '100%'}}
+                    />
+                    <Plot
+                    data ={[
+                        {
+                            x: Object.keys(this.state.Characters_words_book1),
+                            y: Object.values(this.state.Characters_words_book1),
+                            type: 'bar',
+                            name: 'The Fellowship of the Ring'
+                        },
+                        {
+                            x: Object.keys(this.state.Characters_words_book2),
+                            y: Object.values(this.state.Characters_words_book2),
+                            type: 'bar',
+                            name: 'The Two Towers'
+                        },
+                        {
+                            x: Object.keys(this.state.Characters_words_book3),
+                            y: Object.values(this.state.Characters_words_book3),
+                            type: 'bar',
+                            name: 'The Return of The King'
+                        }
+                    ]}
+                    layout={ {title: 'Words by members of The Fellowship of The ring', legend: {"orientation": "h", "valign": "bottom", 'y': -0.2 }} }
                     useResizeHandler={true}
                     style = {{ width: '100%', height: '100%'}}
                     />

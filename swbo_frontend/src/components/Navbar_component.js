@@ -33,19 +33,6 @@ class Navbar_component extends Component {
         return(
             <>
                 {!this.state. loggedIn && (
-          //   <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          //     <div className="collapse navbar-collapse" id="navbarText">
-          //         <ul className="navbar-nav mr-auto">
-          //               <li className="nav navbar-nav navbar-left">
-          //                   <Link className="nav-link" to={"/"}>Home</Link>
-          //               </li>
-          //         </ul>
-          //         <li className="nav navbar-nav navbar-right">
-          //             <Link className="nav-link" to={"/login"}>Login</Link>
-          //             <Link className="nav-link" to={"/register"}>Register</Link>
-          //         </li>
-          //     </div>
-          // </nav>
                     <Navbar bg="light" variant="light" expand="lg" sticky="top">
                 <Nav className="container-fluid">
                 <Navbar.Brand href="/">Home</Navbar.Brand>
